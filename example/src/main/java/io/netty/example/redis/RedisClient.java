@@ -45,18 +45,18 @@ public class RedisClient {
         try {
             Bootstrap b = new Bootstrap();
             b.group(group)
-             .channel(NioSocketChannel.class)
-             .handler(new ChannelInitializer<SocketChannel>() {
-                 @Override
-                 protected void initChannel(SocketChannel ch) throws Exception {
-                     ChannelPipeline p = ch.pipeline();
-                     p.addLast(new RedisDecoder());
-                     p.addLast(new RedisBulkStringAggregator());
-                     p.addLast(new RedisArrayAggregator());
-                     p.addLast(new RedisEncoder());
-                     p.addLast(new RedisClientHandler());
-                 }
-             });
+                    .channel(NioSocketChannel.class)
+                    .handler(new ChannelInitializer<SocketChannel>() {
+                        @Override
+                        protected void initChannel(SocketChannel ch) throws Exception {
+                            ChannelPipeline p = ch.pipeline();
+                            p.addLast(new RedisDecoder());
+                            p.addLast(new RedisBulkStringAggregator());
+                            p.addLast(new RedisArrayAggregator());
+                            p.addLast(new RedisEncoder());
+                            p.addLast(new RedisClientHandler());
+                        }
+                    });
 
             // Start the connection attempt.
             Channel ch = b.connect(HOST, PORT).sync().channel();
@@ -65,7 +65,7 @@ public class RedisClient {
             System.out.println("Enter Redis commands (quit to end)");
             ChannelFuture lastWriteFuture = null;
             BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-            for (;;) {
+            for (; ; ) {
                 final String input = in.readLine();
                 final String line = input != null ? input.trim() : null;
                 if (line == null || "quit".equalsIgnoreCase(line)) { // EOF or "quit"

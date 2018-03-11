@@ -27,6 +27,7 @@ public final class DefaultLastSmtpContent extends DefaultSmtpContent implements 
     /**
      * Creates a new instance using the given data.
      */
+
     public DefaultLastSmtpContent(ByteBuf data) {
         super(data);
     }
